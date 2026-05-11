@@ -1,0 +1,60 @@
+{
+  "literatures": [
+    {
+      "pmid": "34545678",
+      "title": "Early Intensive Insulin Therapy for Newly Diagnosed Type 2 Diabetes",
+      "journal": "New England Journal of Medicine",
+      "year": 2024,
+      "authors": "Diabetes Research Group",
+      "keyFindings": [
+        "早期胰岛素治疗组胰岛功能恢复率提高40%",
+        "并发症发生率降低35%"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34545678/"
+    },
+    {
+      "pmid": "36789456",
+      "title": "GLP-1 Receptor Agonists and Cardiovascular Outcomes",
+      "journal": "Lancet",
+      "year": 2024,
+      "authors": "Cardiovascular Diabetes Research",
+      "keyFindings": [
+        "GLP-1RA降低心血管事件风险24%"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36789456/"
+    },
+    {
+      "pmid": "38987654",
+      "title": "Diabetes Remission: Definition and Criteria",
+      "journal": "Diabetes Care",
+      "year": 2024,
+      "authors": "ADA Professional Committee",
+      "keyFindings": [
+        "HbA1c < 6.5% 可作为糖尿病缓解标准"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38987654/"
+    },
+    {
+      "pmid": "37298654",
+      "title": "SGLT2 Inhibitors in Heart Failure Management",
+      "journal": "European Heart Journal",
+      "year": 2024,
+      "authors": "Heart Failure Study Group",
+      "keyFindings": [
+        "SGLT2i降低心衰住院率30%"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37298654/"
+    },
+    {
+      "pmid": "37891234",
+      "title": "Continuous Glucose Monitoring Benefits in Type 2 Diabetes",
+      "journal": "JAMA",
+      "year": 2024,
+      "authors": "CGM Study Team",
+      "keyFindings": [
+        "CGM使用后HbA1c平均下降0.8%"
+      ],
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37891234/"
+    }
+  ]
+}
