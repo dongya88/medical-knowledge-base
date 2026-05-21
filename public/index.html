@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医疗内容OS - 新媒体内容生产系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 医疗内容OS</h1>
+            <p class="subtitle">新媒体内容生产操作系统 | Gemini AI + RAG</p>
+            <div class="user-info">
+                <span id="userDisplay"></span>
+                <button id="logoutBtn" class="btn-small">退出登录</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="platform-tabs">
+                    <button class="tab active" data-platform="wechat">📝 公众号</button>
+                    <button class="tab" data-platform="douyin">🎵 抖音</button>
+                    <button class="tab" data-platform="xiaohongshu">📕 小红书</button>
+                    <button class="tab" data-platform="news">📰 新闻科普</button>
+                </div>
+
+                <div class="input-group">
+                    <textarea id="topicInput" placeholder="输入内容需求，例如：&#10;• 根据GLP-1停药是否反弹，生成一篇糖尿病科普文章&#10;• 生成一条关于血糖监测的抖音脚本&#10;• 根据最新消息xxx，生成一篇新闻科普"></textarea>
+
+                    <div class="settings-row">
+                        <div class="setting">
+                            <label>字数：</label>
+                            <input type="text" id="wordCount" value="1000-1500" placeholder="如：1000-1500">
+                        </div>
+                        <button id="generateBtn" class="btn-primary">🚀 生成内容</button>
+                    </div>
+                </div>
+
+                <div class="quick-commands">
+                    <span class="label">快捷指令：</span>
+                    <button class="quick-cmd" data-cmd="根据GLP-1停药是否反弹，生成一篇糖尿病科普文章">GLP-1停药反弹</button>
+                    <button class="quick-cmd" data-cmd="生成一条关于血糖监测的抖音脚本300-500字">血糖监测脚本</button>
+                    <button class="quick-cmd" data-cmd="根据最新消息糖尿病饮食指南，生成一篇新闻科普800-1000字">糖尿病饮食指南</button>
+                </div>
+
+                <div class="status-bar">
+                    <span id="apiStatus">🤖 AI: 未连接</span>
+                    <span id="kbStatus">📚 知识库: 加载中...</span>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div class="output-header">
+                    <span>📄 生成结果</span>
+                    <div>
+                        <button id="copyBtn" class="btn-small" disabled>复制内容</button>
+                        <button id="refreshBtn" class="btn-small" disabled>刷新</button>
+                    </div>
+                </div>
+                <div id="output" class="output-content">
+                    <div class="placeholder">
+                        <p>👆 在左侧输入需求，点击"生成内容"开始创作</p>
+                        <p class="tip">支持公众号、抖音、小红书、新闻科普等多种格式</p>
+                    </div>
+                </div>
+                <div class="meta-info" id="metaInfo" style="display:none;">
+                    <span class="meta-item" id="wordCountInfo"></span>
+                    <span class="meta-item" id="platformInfo"></span>
+                    <span class="meta-item" id="citationInfo"></span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="features">
+                <span class="feature">✅ Gemini 2.0 Flash AI</span>
+                <span class="feature">✅ 医学文献引用</span>
+                <span class="feature">✅ 爆款内容结构</span>
+                <span class="feature">✅ 多平台适配</span>
+                <span class="feature">✅ GitHub 云端知识库</span>
+            </div>
+        </footer>
+    </div>
+
+    <div id="loading" class="loading" style="display:none;">
+        <div class="spinner"></div>
+        <p>AI 创作中...</p>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function checkAuth() {
+            try {
+                const response = await fetch('/me');
+                if (!response.ok) {
+                    window.location.href = '/login.html';
+                    return false;
+                }
+                const data = await response.json();
+                if (data.authenticated) {
+                    document.getElementById('userDisplay').textContent = '👤 ' + data.user.username;
+                    return true;
+                } else {
+                    window.location.href = '/login.html';
+                    return false;
+                }
+            } catch (error) {
+                window.location.href = '/login.html';
+                return false;
+            }
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await fetch('/logout', { method: 'POST' });
+                window.location.href = '/login.html';
+            } catch (error) {
+                window.location.href = '/login.html';
+            }
+        });
+
+        checkAuth();
+    </script>
+</body>
+</html>

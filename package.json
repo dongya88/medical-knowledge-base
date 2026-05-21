@@ -1,0 +1,36 @@
+{
+  "name": "content-os",
+  "version": "1.0.0",
+  "description": "医疗新媒体内容生产操作系统",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "cli": "node src/index.js"
+  },
+  "keywords": [
+    "medical",
+    "content",
+    "gemini",
+    "rag"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@qdrant/js-client-rest": "^1.17.0",
+    "bcryptjs": "^3.0.3",
+    "busboy": "^1.6.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.5.2",
+    "express-session": "^1.19.0",
+    "mammoth": "^1.12.0",
+    "node-fetch": "^3.3.2",
+    "pdfjs-dist": "^5.7.284",
+    "pg": "^8.21.0",
+    "sqlite3": "^6.0.1"
+  }
+}

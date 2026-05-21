@@ -1,0 +1,28 @@
+﻿# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+
+# Database files
+database.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Executables
+python-3.11.9-amd64.exe
+
+# Knowledge base
+zhishiku/
+zhishiku-git/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
