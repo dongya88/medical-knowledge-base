@@ -107,9 +107,9 @@ app.get('/me', (req, res) => {
 
 app.get('/api/status', (req, res) => {
     res.json({
-        aiConnected: !!ZHIPU_API_KEY,
-        knowledgeBaseReady: true,
-        version: '1.0.0'
+        ai: !!ZHIPU_API_KEY,
+        aiProvider: '智谱GLM',
+        knowledgeBase: '已加载'
     });
 });
 
