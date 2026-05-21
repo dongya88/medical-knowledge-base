@@ -105,7 +105,7 @@ app.get('/me', (req, res) => {
     res.json({ authenticated: true, user: req.session.user });
 });
 
-app.get('/status', (req, res) => {
+app.get('/api/status', (req, res) => {
     res.json({
         aiConnected: !!ZHIPU_API_KEY,
         knowledgeBaseReady: true,
