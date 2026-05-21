@@ -105,6 +105,14 @@ app.get('/me', (req, res) => {
     res.json({ authenticated: true, user: req.session.user });
 });
 
+app.get('/status', (req, res) => {
+    res.json({
+        aiConnected: !!ZHIPU_API_KEY,
+        knowledgeBaseReady: true,
+        version: '1.0.0'
+    });
+});
+
 let pubmedService = null;
 
 const knowledgeBaseRAG = new KnowledgeBaseRAG('medical_knowledge');
