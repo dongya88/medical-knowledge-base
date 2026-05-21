@@ -241,8 +241,8 @@ app.post('/api/generate', async (req, res) => {
         const kbContext = kbReferences.map((r, i) => `[${i + 1}] ${r.title}\n${r.text || ''}\n`).join('\n');
 
         let rawContent;
-        if (ZHIPU_API_KEY) {
-            const prompt = `你是医疗科普文章专家，请生成一篇公众号科普文章，主题：${topic}
+            if (ZHIPU_API_KEY) {
+                const prompt = `你是医疗科普文章专家，请生成一篇公众号科普文章，主题：${topic}
 
 知识库内容（只包含以下检索到的内容片段）：
 ${kbContext || '（无）'}
@@ -268,33 +268,42 @@ ${refInfo}
 
 请生成文章（必须在正文中使用角标[1][2]等标注来源）：`;
 
-            const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${ZHIPU_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: 'glm-4-flash',
-                    messages: [
-                        { role: 'system', content: '你是一位专业的医疗健康内容创作者，擅长将复杂的医学知识转化为通俗易懂的科普内容。' },
-                        { role: 'user', content: prompt }
-                    ],
-                    temperature: 0.7,
-                    top_p: 0.9
-                })
-            });
+                try {
+                    const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${ZHIPU_API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            model: 'glm-4-flash',
+                            messages: [
+                                { role: 'system', content: '你是一位专业的医疗健康内容创作者，擅长将复杂的医学知识转化为通俗易懂的科普内容。' },
+                                { role: 'user', content: prompt }
+                            ],
+                            temperature: 0.7,
+                            top_p: 0.9
+                        })
+                    });
 
-            if (!response.ok) throw new Error(`智谱AI API错误: ${response.status}`);
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => null);
+                        const errorMsg = errorData?.error?.message || errorData?.message || `HTTP错误: ${response.status}`;
+                        throw new Error(`智谱AI API错误: ${errorMsg}`);
+                    }
 
-            const data = await response.json();
-            const content = data.choices[0].message.content;
+                    const data = await response.json();
+                    const content = data.choices[0].message.content;
 
-            const titleMatch = content.match(/标题[：:]\s*([^\n]+)/) || content.match(/【(.+?)】/) || content.match(/#{1,3}\s*(.+?)\s*$/m);
-            const title = titleMatch ? titleMatch[1].trim() : `${topic} - 医疗健康科普`;
+                    const titleMatch = content.match(/标题[：:]\s*([^\n]+)/) || content.match(/【(.+?)】/) || content.match(/#{1,3}\s*(.+?)\s*$/m);
+                    const title = titleMatch ? titleMatch[1].trim() : `${topic} - 医疗健康科普`;
 
-            rawContent = { title, content };
-        } else {
+                    rawContent = { title, content };
+                } catch (apiError) {
+                    console.error('智谱AI调用失败:', apiError.message);
+                    throw new Error(`AI生成失败: ${apiError.message}`);
+                }
+            } else {
             rawContent = {
                 title: `${topic} - 医疗科普`,
                 content: `标题：${topic}\n\n这是一篇演示文章，当前为演示模式，请配置ZHIPU_API_KEY以获得完整功能。\n\n参考文献：\n${refInfo}`
